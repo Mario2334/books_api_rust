@@ -1,7 +1,14 @@
+#[macro_use]
+extern crate diesel;
+#[macro_use]
+extern crate diesel_migrations;
+
 use actix_web::{App, HttpServer};
 
 pub mod models;
 pub mod routes;
+
+
 fn publish_url() -> String{
     println!("This app is served from http://127.0.0.1:8000");
     String::from("127.0.0.1:8000")
