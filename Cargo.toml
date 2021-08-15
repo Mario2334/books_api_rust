@@ -10,8 +10,8 @@ actix-web = "3"
 actix-rt = "*"
 serde = "*"
 serde_json = "*"
-diesel = { version = "*", features = ["postgres", "r2d2", "uuid", "chrono"] }
-lazy_static = "*"
-r2d2 = "*"
-diesel_migrations = "*"
-uuid = { version = "*", features = ["serde", "v4"] }
+dotenv = "*"
+sqlx = { version = "0.3", features = [ 'runtime-async-std',"macros", "postgres", "chrono", "json" ] }
+futures = "*"
+listenfd = "*"
+anyhow = "*"
