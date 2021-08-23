@@ -39,4 +39,16 @@ impl PublicUsers{
         }
         Ok(users)
     }
+
+    pub async fn create(&self, pool:&PgPool) -> Result<PublicUsers,sqlx::error::Error> {
+        println!("{}",self.firstname.as_str());
+        // let raw_query = format!(
+        //     r#"INSERT INTO public_users (firstname, lastname) VALUES ('{}','{}') "#,
+        //     self.firstname,self.lastname);
+
+        let rec = sqlx::query_as!(PublicUsers,"INSERT INTO public_users (firstname, lastname) VALUES ( $1, $2) RETURNING *;",self.firstname.as_str(),self.lastname.as_str())
+            .fetch_one(pool).await?;
+        println!("{}",self.firstname.as_str());
+        Ok(rec)
+    }
 }

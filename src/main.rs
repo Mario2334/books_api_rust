@@ -13,6 +13,7 @@ fn publish_url() -> String{
     println!("This app is served from http://127.0.0.1:8000");
     String::from("127.0.0.1:8000")
 }
+
 #[actix_rt::main]
 async fn main() -> std::io::Result<()>{
     dotenv().ok();

@@ -1,4 +1,4 @@
-use actix_web::{Responder,HttpResponse,get,web};
+use actix_web::{Responder,HttpResponse,get,post,web};
 use crate::models::user::PublicUsers;
 use sqlx::PgPool;
 
@@ -22,7 +22,18 @@ async fn find() -> impl Responder{
     )
 }
 
+#[post("/users")]
+async fn create_user(db_pool: web::Data<PgPool>, payload: web::Json<PublicUsers>) -> impl Responder {
+    // println!("{}",payload.firstname.as_str());
+    let result = payload.create(db_pool.get_ref()).await;
+    match result {
+        Ok(created_user) =>     HttpResponse::Ok().json(created_user),
+        _ => HttpResponse::BadRequest().body("Users not found")
+    }
+}
+
 pub fn user_routes(config: &mut web::ServiceConfig){
     config.service(find);
     config.service(find_all);
+    config.service(create_user);
 }
